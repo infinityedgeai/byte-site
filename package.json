@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "build:preview": "NEXT_PUBLIC_IS_GITHUB_PREVIEW=true next build",
     "start": "next start",
     "lint": "next lint",
     "deploy": "gh-pages -d out"
