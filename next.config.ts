@@ -1,15 +1,13 @@
-import type { NextConfig } from "next";
+/** @type {import('next').NextConfig} */
+const isGithubPreview = process.env.NEXT_PUBLIC_IS_GITHUB_PREVIEW === 'true';
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   output: 'export',
-  basePath: '/byte-site',
-  assetPrefix: '/byte-site/',
+  basePath: isGithubPreview ? '/byte-site' : '',
+  assetPrefix: isGithubPreview ? '/byte-site/' : '',
   images: {
     unoptimized: true,
   },
 };
 
-
 export default nextConfig;
-
-
