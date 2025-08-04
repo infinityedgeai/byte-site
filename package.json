@@ -2,14 +2,11 @@
   "name": "byte-site",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://wearedemo.github.io/byte-site",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "build:preview": "NEXT_PUBLIC_IS_GITHUB_PREVIEW=true next build",
     "start": "next start",
-    "lint": "next lint",
-    "deploy": "gh-pages -d out"
+    "lint": "next lint"  
   },
   "dependencies": {
     "next": "15.4.5",

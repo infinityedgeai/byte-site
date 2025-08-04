@@ -14,12 +14,6 @@ pnpm dev
 bun dev
 ```
 
-To create a static export of the app on https://wearedemo.github.io/byte-site/ after you have pushed you can run:
-
-```bash
-npm run build
-npm run deploy
-```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
