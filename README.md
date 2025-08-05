@@ -17,7 +17,7 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-E2E tests
+### E2E tests
 
 With the app running locally run in terminal.
 - Interactive mode
@@ -28,6 +28,13 @@ npm run cypress:open
 - Headless mode
 ```bash
 npx cypress run
+```
+
+### Unit tests
+
+Unit test are in jest and they can be executed with: 
+```bash
+npm run test
 ```
 ## Learn More
 
