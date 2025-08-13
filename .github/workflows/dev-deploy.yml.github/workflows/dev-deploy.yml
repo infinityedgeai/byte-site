@@ -2,9 +2,9 @@ name: CI & Deploy — Dev
 
 on:
   push:
-    branches: [develop]
+    branches: [dev]
   pull_request:
-    branches: [develop, main]   # PRs just run CI; deploy only happens on push to develop
+    branches: [dev, main]   # PRs just run CI; deploy only happens on push to dev
   workflow_dispatch:
 
 env:
@@ -69,7 +69,7 @@ jobs:
 
   deploy:
     name: Deploy to Azure (Dev)
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/develop')
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/dev')
     runs-on: ubuntu-latest
     needs: build
     environment:
