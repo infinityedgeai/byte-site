@@ -8,8 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME:    # dev app (same as your current)
-  SLOT_NAME: 
+  AZURE_WEBAPP_NAME: 'byte-dev-c5cdcxfpd9bch6dp'
   NODE_VERSION: 22.17.1
 
 concurrency:
