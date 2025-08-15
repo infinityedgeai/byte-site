@@ -5,7 +5,7 @@
   --foreground: black;
 }
 
-[data-theme='dark'] {
+.dark {
   --background: black;
   --foreground: white;
 }
