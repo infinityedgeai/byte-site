@@ -11,8 +11,6 @@ export default function Home() {
   const loopRef = useRef<HTMLLIElement | null>(null);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
     const ctx = gsap.context(() => {
       if (textRef.current) {
         textRef.current.textContent = "";
