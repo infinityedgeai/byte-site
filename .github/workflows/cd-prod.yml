@@ -1,13 +1,13 @@
-name: CI & Deploy — Prod
+name: CD Pipeline — Prod
 
 on:
   # Deploy after PRs are merged into release/main (push happens on merge)
   push:
-    branches: [main, release]
+    branches: [main]
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME:       # <-- set your production app name
+  AZURE_WEBAPP_NAME: byte-g3gxd3egf7asg3dg'
   NODE_VERSION: 22.17.1
 
 concurrency:
@@ -38,13 +38,13 @@ jobs:
           cd ..
 
       - name: 📂 Copy standalone into root
-        run: cp -R ./src/.next/standalone ./site-deploy
+        run: cp -R .next/standalone ./site-deploy
 
       - name: 📂 Copy static into .next
-        run: cp -R ./src/.next/static ./site-deploy/.next/static
+        run: cp -R .next/static ./site-deploy/.next/static
 
       - name: 📂 Copy public
-        run: cp -R ./src/public ./site-deploy/public
+        run: cp -R public ./site-deploy/public
 
       - name: 📦 Zip package
         run: |
