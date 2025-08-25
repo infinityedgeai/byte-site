@@ -13,7 +13,7 @@ export function MenuBar() {
     color: 'var(--foreground)',
   }}
 >
-  <Link href="/" className="flex items-center space-x-2">
+  <Link href="/" aria-label="Home" className="flex items-center space-x-2">
     <Image src="/logo.png" alt="Logo" width={48} height={48} />
     <Image src="/byte.png" alt="Byte Engineering" width={180} height={30} />
   </Link>
