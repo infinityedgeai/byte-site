@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: Node.js Build & Test Pipeline
 on:
   push:
     branches: [main, dev]

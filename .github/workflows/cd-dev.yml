@@ -4,19 +4,21 @@ on:
     workflows: ["CI Pipeline"]
     types:
       - completed
-    branches:
-      - dev
   workflow_dispatch:
+
 env:
   AZURE_WEBAPP_NAME: 'byte-dev-c5cdcxfpd9bch6dp'
   NODE_VERSION: 22.17.1
+
 concurrency:
   group: dev-${{ github.ref }}
   cancel-in-progress: true
+
 jobs:
   deploy:
     name: Deploy to Azure (Dev)
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    # Only deploy if CI succeeded and the branch is 'dev'
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'dev' }}
     runs-on: ubuntu-latest
     environment:
       name: Development
@@ -30,6 +32,5 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          slot-name: ${{ env.SLOT_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: ${{ github.workspace }}/Nextjs-site.zip
