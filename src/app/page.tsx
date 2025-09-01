@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { TextPlugin } from "gsap/dist/TextPlugin";
+import SlideOne from "@/components/SlideOne";
 
 gsap.registerPlugin(TextPlugin);
 
@@ -20,7 +21,6 @@ export default function Home() {
           ease: "none",
         });
       }
-
       if (loopRef.current) {
         const el = loopRef.current;
         const words = ["Coders", "Devs", "AI"];
@@ -53,23 +53,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <ul className="font-mono list-inside text-sm/6 text-center sm:text-left">
-          <li className="mb-5 tracking-[0.3em]">Software Development Services.</li>
-          <li
-            ref={textRef}
-            className="mb-2 tracking-[-.01em] relative after:content-[''] after:inline-block after:w-[1px] after:h-[1em] after:align-[-0.2em] after:ml-1 after:bg-current after:animate-pulse"
-            style={{ whiteSpace: "pre-wrap" }}
-          />
-
-          <li
-            ref={loopRef}
-            className="mb-2 tracking-[-.01em] relative after:content-[''] after:inline-block after:w-[1px] after:h-[1em] after:align-[-0.2em] after:ml-1 after:bg-current after:animate-pulse"
-            style={{ whiteSpace: "pre-wrap" }}
-          />
-        </ul>
-      </main>
+    <div className="w-full overflow-y-auto snap-y snap-mandatory h-screen">
+      <SlideOne textRef={textRef} loopRef={loopRef} />
     </div>
   );
 }
