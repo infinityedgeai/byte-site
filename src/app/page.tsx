@@ -4,6 +4,9 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { TextPlugin } from "gsap/dist/TextPlugin";
 import SlideOne from "@/components/SlideOne";
+import SlideTwo from "@/components/SlideTwo";
+import SlideThree from "@/components/SlideThree";
+import SlideFour from "@/components/SlideFour";
 
 gsap.registerPlugin(TextPlugin);
 
@@ -55,6 +58,9 @@ export default function Home() {
   return (
     <div className="w-full overflow-y-auto snap-y snap-mandatory h-screen">
       <SlideOne textRef={textRef} loopRef={loopRef} />
+      <SlideTwo />
+      <SlideThree />
+      <SlideFour />
     </div>
   );
 }
