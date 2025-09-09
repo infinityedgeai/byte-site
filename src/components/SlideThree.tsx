@@ -4,21 +4,21 @@ import React, { useEffect, useState, useRef } from "react";
 import WordCloud from "react-d3-cloud-modern";
 
 const data = [
-  { text: "Byte", value: 50 },
-  { text: "Engineering", value: 40 },
-  { text: "AI", value: 30 },
-  { text: "Dev", value: 25 },
-  { text: "Software", value: 20 },
-  { text: "Cloud", value: 15 },
-  { text: "Services", value: 10 },
-  { text: "Ser", value: 10 },
-  { text: "vices", value: 80 },
-  { text: "Cloudy", value: 35 },
-  { text: "Development", value: 45 },
-  { text: "Byte Engineering", value: 55 },
-  { text: "AI Solutions", value: 28 },
-  { text: "Software Dev", value: 22 },
-  { text: "Cloud Services", value: 18 },
+  { text: "Byte" },
+  { text: "Engineering"},
+  { text: "AI"},
+  { text: "Dev" },
+  { text: "Software" },
+  { text: "Cloud" },
+  { text: "Services" },
+  { text: "Ser" },
+  { text: "vices" },
+  { text: "Cloudy" },
+  { text: "Development" },
+  { text: "Byte Engineering" },
+  { text: "AI Solutions" },
+  { text: "Software Dev" },
+  { text: "Cloud Services" },
 ];
 
 type MyWord = {
@@ -34,11 +34,12 @@ const WORDCLOUD_PADDING = 4;
 const generateWordData = (): MyWord[] =>
   data.map((word) => ({
     ...word,
+    value: 1, // Ensure value is always a number
     rotation: Math.random() > 0.5 ? 0 : 90,
     color: ["#2563eb", "#9333ea", "#f59e0b", "#10b981"][
       Math.floor(Math.random() * 4)
     ],
-    fontSize: word.value * 2,
+    fontSize: Math.floor(Math.random() * (80 - 5 + 1)) + 20,
   }));
 
 type WordBounds = { x: number; y: number; width: number; height: number };
