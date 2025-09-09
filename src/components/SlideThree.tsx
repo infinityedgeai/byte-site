@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
-import WordCloud from "react-d3-cloud";
+import WordCloud from "react-d3-cloud-modern";
 
 const data = [
   { text: "Byte", value: 50 },
