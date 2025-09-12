@@ -7,7 +7,7 @@ on:
 jobs:
   unit-test:
     runs-on: ubuntu-latest
-    timeout-minutes: 2
+    timeout-minutes: 5
 
     steps:
       - name: Checkout code
@@ -25,7 +25,7 @@ jobs:
 
   e2e-test:
     runs-on: ubuntu-latest
-    timeout-minutes: 2
+    timeout-minutes: 5
     needs: unit-test
     
     steps:
@@ -54,7 +54,7 @@ jobs:
   
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 2
+    timeout-minutes: 5
     needs: e2e-test
     steps:
       - name: Checkout code
