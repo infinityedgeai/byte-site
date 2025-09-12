@@ -22,12 +22,6 @@ jobs:
         run: npm run lint
       - name: Run unit tests (Jest)
         run: npm test
-      - name: Run Cypress tests
-        uses: cypress-io/github-action@v6
-        with:
-          start: npm run start
-          wait-on: 'http://localhost:3000'
-          wait-on-timeout: 60
 
   e2e-test:
     runs-on: ubuntu-latest
