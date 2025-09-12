@@ -9,11 +9,6 @@ export default function SlideFour() {
 
     const data = new FormData(e.currentTarget);
 
-    console.log({
-      name: data.get("name"),
-      email: data.get("email"),
-      message: data.get("message"),
-    });
   };
 
   return (
