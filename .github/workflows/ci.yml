@@ -1,0 +1,73 @@
+name: Build & Test Pipeline
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: $ {{ vars.NODE_VERSION }} 
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint with ESLint
+        run: npm run lint
+      - name: Run unit tests (Jest)
+        run: npm test
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm run start
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 60
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: $ {{ vars.NODE_VERSION }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Build the app
+        run: |
+          cd ./src
+          npm run build
+      - name: 📂 Copy standalone into root
+        run: cp -R .next/standalone ./site-deploy
+
+      - name: 📂 Copy static into .next
+        run: cp -R .next/static ./site-deploy/.next/static
+
+      - name: 📂 Copy public
+        run: cp -R public ./site-deploy/public
+
+      - name: 📦 Zip package
+        run: |
+          cd ./site-deploy
+          zip site.zip ./* .next -qr
+          mv site.zip $GITHUB_WORKSPACE/
+
+      - name: 🔍 Diagnostics
+        run: |
+          ls -la ./src
+          ls -la ./src/.next
+          ls -la ./site-deploy
+          ls -la $GITHUB_WORKSPACE
+
+      - name: ⬆️ Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: ${{ github.workspace }}/site.zip
