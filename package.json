@@ -54,7 +54,7 @@
   "eslintConfig": {
     "extends": "next/core-web-vitals",
     "ignorePatterns": [
-      "src/cypress/e2e/2-advanced-examples/**"
+      "cypress/e2e/2-advanced-examples/**"
     ]
   }
 }
