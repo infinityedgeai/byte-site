@@ -50,5 +50,11 @@
     "ts-jest": "^29.4.1",
     "ts-node": "^10.9.2",
     "typescript": "^5"
+  },
+  "eslintConfig": {
+    "extends": "next/core-web-vitals",
+    "ignorePatterns": [
+      "src/cypress/e2e/2-advanced-examples/**"
+    ]
   }
 }
