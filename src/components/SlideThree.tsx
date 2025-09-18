@@ -3,7 +3,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import WordCloud from "react-d3-cloud-modern";
 import seedrandom from "seedrandom";
-import '@testing-library/jest-dom';
 
 const rng = seedrandom("test-seed");
 const data = [
