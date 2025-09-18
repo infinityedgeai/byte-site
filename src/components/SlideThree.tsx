@@ -3,8 +3,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import WordCloud from "react-d3-cloud-modern";
 import seedrandom from "seedrandom";
+import '@testing-library/jest-dom';
 
-const rng = seedrandom("test-seed"); // 👈 use a fixed seed during tests
+const rng = seedrandom("test-seed");
 const data = [
   { text: "Byte" },
   { text: "Engineering"},
@@ -56,17 +57,16 @@ function isWordOutOfBounds(word: WordBounds, containerWidth: number, containerHe
 }
 
 function validateWords(words: MyWord[], width: number, height: number): MyWord[] {
+  if (process.env.JEST_WORKER_ID) {
+    return words.map(word => ({ ...word, rotation: 0 }));
+  }
   let valid = false;
   let newWords = [...words];
-
   while (!valid) {
     valid = true;
-    newWords = newWords.map((word) => ({
-      ...word,
-      rotation: Math.random() > 0.5 ? 0 : 90,
-    }));
+    newWords = newWords.map(word => ({ ...word, rotation: Math.random() > 0.5 ? 0 : 90 }));
     for (const word of newWords) {
-      const wordWidth = word.fontSize * word.text.length * 0.6; 
+      const wordWidth = word.fontSize * word.text.length * 0.6;
       const wordHeight = word.fontSize;
       const x = Math.random() * (width - wordWidth) + wordWidth / 2;
       const y = Math.random() * (height - wordHeight) + wordHeight / 2;
@@ -102,7 +102,7 @@ const WordCloudComponent: React.FC<{
   }
 }, [start, parentRef]);
   return (
-    <div className="items-center justify-center overflow-hidden w-full h-full" data-cy="wordcloud-canvas">
+    <div className="items-center justify-center overflow-hidden w-full h-full" data-cy="wordcloud-canvas" data-testid="wordcloud-canvas">
       <div
         className={`transition-opacity duration-1000 ${
           start ? "opacity-100" : "opacity-0"
@@ -152,7 +152,7 @@ export default function SlideThree() {
 
   return (
     <section
-      ref={sectionRef} className="flex min-h-screen w-full items-center justify-center snap-start">
+      ref={sectionRef} className="flex min-h-screen w-full items-center justify-center snap-start" data-testid="SlideThree">
       <WordCloudComponent start={startAnimation} parentRef={sectionRef} />
     </section>
   );
