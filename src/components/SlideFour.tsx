@@ -1,107 +1,78 @@
 "use client";
 
-import React from "react";
-import * as Form from "@radix-ui/react-form";
+import React, { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import "leaflet/dist/leaflet.css";
+
+const MapContainer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.MapContainer),
+  { ssr: false }
+);
+const TileLayer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.TileLayer),
+  { ssr: false }
+);
+const Marker = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Marker),
+  { ssr: false }
+);
+const Popup = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Popup),
+  { ssr: false }
+);
 
 export default function SlideFour() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const positions: [number, number][] = [
+    [51.505, -0.09],//uk
+    [40.505, -0.09],//spain
+    [30.505, -0.09],//algeria
+    [20.505, -0.09],//mali
+  ];
 
-    const data = new FormData(e.currentTarget);
+  const [countries, setCountries] = useState<{ [key: string]: string }>({});
 
+  const fetchCountry = async (lat: number, lon: number) => {
+    try {
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
+      );
+      const data = await res.json();
+      return data.address?.country || "Unknown";
+    } catch (error) {
+      console.error("Error fetching country:", error);
+      return "Unknown";
+    }
   };
 
-  return (
-    <section className="font-mono h-screen flex flex-col items-center justify-center snap-start px-4"
-        style={{
-          backgroundColor: "var(--background)",
-          color: "var(--foreground)",
-        }}
-      >
-      <h1 className="text-2xl font-bold mb-6 text-center">
-        Reach out to us with your next big idea
-      </h1>
-     <Form.Root
-        onSubmit={handleSubmit}
-        className="space-y-4 w-full max-w-md p-6 rounded-xl shadow-md bg-white text-neutral-900"
-        style={{ colorScheme: "light" }} 
-      >
-        <Form.Field name="name">
-          <div className="flex flex-col gap-1">
-            <Form.Label className="text-sm font-medium text-neutral-800">
-              Name
-            </Form.Label>
-            <Form.Control asChild>
-              <input
-                type="text"
-                required
-                className="w-full rounded-lg border px-3 py-2
-                           bg-white text-neutral-900 placeholder-neutral-500 border-neutral-300
-                           focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              />
-            </Form.Control>
-            <Form.Message
-              match="valueMissing"
-              className="text-sm text-red-600"
-            >
-              Please enter your name
-            </Form.Message>
-          </div>
-        </Form.Field>
-        <Form.Field name="email">
-          <div className="flex flex-col gap-1">
-            <Form.Label className="text-sm font-medium text-neutral-800">
-              Email
-            </Form.Label>
-            <Form.Control asChild>
-              <input
-                type="email"
-                required
-                className="w-full rounded-lg border px-3 py-2
-                           bg-white text-neutral-900 placeholder-neutral-500 border-neutral-300
-                           focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              />
-            </Form.Control>
-            <Form.Message match="valueMissing" className="text-sm text-red-600">
-              Please enter your email
-            </Form.Message>
-            <Form.Message match="typeMismatch" className="text-sm text-red-600">
-              Please provide a valid email
-            </Form.Message>
-          </div>
-        </Form.Field>
+  useEffect(() => {
+    positions.forEach(async ([lat, lon]) => {
+      const country = await fetchCountry(lat, lon);
+      setCountries((prev) => ({ ...prev, [`${lat},${lon}`]: country }));
+    });
+  }, []);
 
-        <Form.Field name="message">
-          <div className="flex flex-col gap-1">
-            <Form.Label className="text-sm font-medium text-neutral-800">
-              Message
-            </Form.Label>
-            <Form.Control asChild>
-              <textarea
-                rows={4}
-                required
-                className="w-full rounded-lg border px-3 py-2
-                           bg-white text-neutral-900 placeholder-neutral-500 border-neutral-300
-                           focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              />
-            </Form.Control>
-            <Form.Message
-              match="valueMissing"
-              className="text-sm text-red-600"
-            >
-              Please enter a message
-            </Form.Message>
-          </div>
-        </Form.Field>
-        <Form.Submit asChild>
-          <button
-            type="submit"
-            className="w-full rounded-lg bg-black px-4 py-2 text-white font-medium hover:bg-indigo-700 transition-colors"
-          >
-            Send Message
-          </button>
-        </Form.Submit>
-      </Form.Root>
+  return (
+    <section className="flex items-center justify-center h-screen w-full snap-start">
+      <div className="w-[80vw] h-[80vh]">
+        <MapContainer
+          center={positions[0]}
+          zoom={3}
+          scrollWheelZoom={false}
+          style={{ width: "100%", height: "100%" }}
+        >
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          />
+          {positions.map(([lat, lon]) => (
+            <Marker key={`${lat},${lon}`} position={[lat, lon]}>
+              <Popup>
+                Country: {countries[`${lat},${lon}`] || "Loading..."}
+              </Popup>
+            </Marker>
+          ))}
+        </MapContainer>
+      </div>
     </section>
   );
 }

@@ -7,6 +7,7 @@ import SlideOne from "@/components/SlideOne";
 import SlideTwo from "@/components/SlideTwo";
 import SlideThree from "@/components/SlideThree";
 import SlideFour from "@/components/SlideFour";
+import SlideFive from "@/components/SlideFive";
 
 gsap.registerPlugin(TextPlugin);
 
@@ -60,7 +61,8 @@ export default function Home() {
       <SlideOne textRef={textRef} loopRef={loopRef} />
       <SlideTwo />
       <SlideThree />
-      <SlideFour />
+       <SlideFour />
+      <SlideFive />
     </div>
   );
 }
