@@ -22,6 +22,24 @@ const Popup = dynamic(
 );
 
 export default function SlideFour() {
+   const [LeafletLoaded, setLeafletLoaded] = useState(false);
+
+  useEffect(() => {
+    import("leaflet").then(L => {
+      import("leaflet/dist/images/marker-icon-2x.png").then(({ default: markerIcon2x }) => {
+        import("leaflet/dist/images/marker-icon.png").then(({ default: markerIcon }) => {
+          import("leaflet/dist/images/marker-shadow.png").then(({ default: markerShadow }) => {
+            L.Icon.Default.mergeOptions({
+              iconRetinaUrl: markerIcon2x,
+              iconUrl: markerIcon,
+              shadowUrl: markerShadow,
+            });
+            setLeafletLoaded(true); 
+          });
+        });
+      });
+    });
+  }, []);
   const positions: [number, number][] = [
     [51.505, -0.09],//uk
     [40.505, -0.09],//spain
@@ -50,7 +68,8 @@ export default function SlideFour() {
       setCountries((prev) => ({ ...prev, [`${lat},${lon}`]: country }));
     });
   }, []);
-
+  
+  if (!LeafletLoaded) return <div className="h-[80vh] w-[80vw] flex items-center justify-center">Loading map...</div>;
   return (
     <section className="flex items-center justify-center h-screen w-full snap-start">
       <div className="w-[80vw] h-[80vh]">

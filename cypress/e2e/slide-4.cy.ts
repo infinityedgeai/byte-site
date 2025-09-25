@@ -1,23 +1,22 @@
 describe('Slide Four - Map with Markers', () => {
-   const markerCountries: Record<string, string> = {
-      "51.505,-0.09": "United Kingdom",
-      "40.505,-0.09": "Spain",
-      "30.505,-0.09": "Algeria",
-      "20.505,-0.09": "Mali",
-    };
+  const markerCountries: Record<number, string> = {
+    0: "United Kingdom",
+    1: "Spain",
+    2: "Algeria",
+    3: "Mali",
+  };
 
   beforeEach(() => {
+    cy.viewport(1920, 1080);
     cy.visit('/');
     cy.get('section').eq(3).scrollIntoView();
   });
 
   it('checks markers and their country popups', () => {
     cy.get('.leaflet-marker-icon').each(($marker, index) => {
-      
-      cy.wrap($marker).click({ force: true });
-      const coords = $marker.attr('src'); 
-      const key = Object.keys(markerCountries)[index]; 
-      const expectedCountry = markerCountries[key];
+      cy.wrap($marker).first().click({ force: true });
+
+      const expectedCountry = markerCountries[index];
 
       cy.get('.leaflet-popup-content', { timeout: 10000 })
         .should('exist')
@@ -27,4 +26,3 @@ describe('Slide Four - Map with Markers', () => {
     });
   });
 });
-
