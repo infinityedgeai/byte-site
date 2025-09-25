@@ -3,7 +3,6 @@ on:
   push:
     branches: [main, dev]
   pull_request:
-
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -12,29 +11,18 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
-
+          node-version: '18' 
       - name: Install dependencies
-        run: |
-          npm install
-          # Force install the linux-x64-gnu LightningCSS binary
-          npm explore lightningcss -- npm install lightningcss-linux-x64-gnu
-          npx next telemetry disable
-
-      - name: Build the app
-        run: npx next build
-
+        run: npm ci && npx next build
       - name: Lint with ESLint
         run: npm run lint
-
       - name: Run unit tests (Jest)
         run: npm test
-
+      - name: Build the app
+        run: npm run build
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
