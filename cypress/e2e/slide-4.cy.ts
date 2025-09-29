@@ -1,28 +1,75 @@
 describe('Slide Four - Map with Markers', () => {
-  const markerCountries: Record<number, string> = {
-    0: "United Kingdom",
-    1: "Spain",
-    2: "Algeria",
-    3: "Mali",
-  };
+  const positions = [
+    [51.505, -0.09], // United Kingdom
+    [40.505, -0.09], // Spain
+    [30.505, -0.09], // Algeria
+    [20.505, -0.09], // Mali
+  ];
+  const markerCountries = [
+    "United Kingdom",
+    "Spain", 
+    "Algeria",
+    "Mali",
+  ];
 
   beforeEach(() => {
-    cy.viewport(1920, 1080);
+    // Mock the API to make tests faster and more reliable
+    cy.intercept('GET', 'https://nominatim.openstreetmap.org/reverse*', (req) => {
+      const lat = Number(req.query.lat);
+      let country = 'Unknown';
+      if (lat === 51.505) country = 'United Kingdom';
+      else if (lat === 40.505) country = 'Spain';
+      else if (lat === 30.505) country = 'Algeria';
+      else if (lat === 20.505) country = 'Mali';
+      req.reply({
+        statusCode: 200,
+        body: { address: { country } }
+      });
+    }).as('getCountry');
+    
     cy.visit('/');
     cy.get('section').eq(3).scrollIntoView();
   });
 
-  it('checks markers and their country popups', () => {
-    cy.get('.leaflet-marker-icon').each(($marker, index) => {
-      cy.wrap($marker).first().click({ force: true });
+  it('renders the map and markers', () => {
+    cy.get('.leaflet-container', { timeout: 20000 }).should('exist');
+    
+    cy.get('.leaflet-marker-icon', { timeout: 20000 }).should('have.length', 4);
+  });
 
-      const expectedCountry = markerCountries[index];
+  it('can click markers and see popups', () => {
+    cy.get('.leaflet-container', { timeout: 20000 }).should('exist');
+    cy.get('.leaflet-marker-icon', { timeout: 20000 }).should('have.length', 4);
+    
+    cy.get('.leaflet-marker-icon').first().click({ force: true });
+    
+    cy.get('.leaflet-popup-content', { timeout: 10000 })
+      .should('exist')
+      .should('be.visible');
+    
+    cy.get('.leaflet-popup-close-button').click({ force: true });
+  });
 
+  it('markers show correct country information', () => {
+    cy.get('.leaflet-container', { timeout: 20000 }).should('exist');
+    cy.get('.leaflet-marker-icon', { timeout: 20000 }).should('have.length', 4);
+    
+    positions.forEach((position, index) => {
+     
+      cy.get('.leaflet-popup').should('not.exist');
+      
+      cy.get('.leaflet-marker-icon').eq(index).click({ force: true });
+      
       cy.get('.leaflet-popup-content', { timeout: 10000 })
         .should('exist')
-        .and('contain.text', expectedCountry);
-
-      cy.get('.leaflet-popup-close-button').click({ force: true });
+        .should('have.length', 1)
+        .should('contain.text', markerCountries[index]);
+      
+      cy.get('.leaflet-popup-close-button')
+        .should('have.length', 1)
+        .click({ force: true });
+      
+      cy.get('.leaflet-popup').should('not.exist');
     });
   });
 });

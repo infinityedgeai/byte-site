@@ -68,14 +68,14 @@ export default function SlideFour() {
       setCountries((prev) => ({ ...prev, [`${lat},${lon}`]: country }));
     });
   }, []);
-  
+
   if (!LeafletLoaded) return <div className="h-[80vh] w-[80vw] flex items-center justify-center">Loading map...</div>;
   return (
     <section className="flex items-center justify-center h-screen w-full snap-start">
       <div className="w-[80vw] h-[80vh]">
         <MapContainer
-          center={positions[0]}
-          zoom={3}
+          center={positions[2]}
+          zoom={4}
           scrollWheelZoom={false}
           style={{ width: "100%", height: "100%" }}
         >
@@ -83,8 +83,20 @@ export default function SlideFour() {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
-          {positions.map(([lat, lon]) => (
-            <Marker key={`${lat},${lon}`} position={[lat, lon]}>
+          {positions.map(([lat, lon], index) => (
+            <Marker 
+              key={`${lat},${lon}`} 
+              position={[lat, lon]}
+              eventHandlers={{
+                add: (e) => {
+                  const marker = e.target;
+                  if (marker._icon) {
+                    marker._icon.setAttribute('data-cy', `marker-${lat}-${lon}`);
+                    marker._icon.setAttribute('data-marker-index', index.toString());
+                  }
+                }
+              }}
+            >
               <Popup>
                 Country: {countries[`${lat},${lon}`] || "Loading..."}
               </Popup>
