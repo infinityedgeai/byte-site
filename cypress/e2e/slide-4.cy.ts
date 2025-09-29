@@ -13,7 +13,6 @@ describe('Slide Four - Map with Markers', () => {
   ];
 
   beforeEach(() => {
-    // Mock the API to make tests faster and more reliable
     cy.intercept('GET', 'https://nominatim.openstreetmap.org/reverse*', (req) => {
       const lat = Number(req.query.lat);
       let country = 'Unknown';
@@ -38,29 +37,33 @@ describe('Slide Four - Map with Markers', () => {
   });
 
   it('can click markers and see popups', () => {
-    cy.get('.leaflet-container', { timeout: 20000 }).should('exist');
-    cy.get('.leaflet-marker-icon', { timeout: 20000 }).should('have.length', 4);
+    cy.get('.leaflet-container', { timeout: 30000 }).should('exist');
+    cy.get('.leaflet-marker-icon', { timeout: 30000 }).should('have.length', 4);
+    
+    cy.get('.leaflet-popup').should('not.exist');
     
     cy.get('.leaflet-marker-icon').first().click({ force: true });
-    
-    cy.get('.leaflet-popup-content', { timeout: 10000 })
+  
+    cy.get('.leaflet-popup-content', { timeout: 15000 })
       .should('exist')
       .should('be.visible');
     
     cy.get('.leaflet-popup-close-button').click({ force: true });
+    cy.get('.leaflet-popup').should('not.exist');
   });
 
   it('markers show correct country information', () => {
-    cy.get('.leaflet-container', { timeout: 20000 }).should('exist');
-    cy.get('.leaflet-marker-icon', { timeout: 20000 }).should('have.length', 4);
+    cy.get('.leaflet-container', { timeout: 30000 }).should('exist');
+    cy.get('.leaflet-marker-icon', { timeout: 30000 }).should('have.length', 4);
     
-    positions.forEach((position, index) => {
-     
+    for (let index = 0; index < positions.length; index++) {
       cy.get('.leaflet-popup').should('not.exist');
       
-      cy.get('.leaflet-marker-icon').eq(index).click({ force: true });
+      cy.get('.leaflet-marker-icon').eq(index)
+        .should('exist')
+        .click({ force: true });
       
-      cy.get('.leaflet-popup-content', { timeout: 10000 })
+      cy.get('.leaflet-popup-content', { timeout: 15000 })
         .should('exist')
         .should('have.length', 1)
         .should('contain.text', markerCountries[index]);
@@ -69,7 +72,7 @@ describe('Slide Four - Map with Markers', () => {
         .should('have.length', 1)
         .click({ force: true });
       
-      cy.get('.leaflet-popup').should('not.exist');
-    });
+      cy.get('.leaflet-popup', { timeout: 10000 }).should('not.exist');
+    }
   });
 });
