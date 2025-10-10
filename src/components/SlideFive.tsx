@@ -4,12 +4,38 @@ import React from "react";
 import * as Form from "@radix-ui/react-form";
 
 export default function SlideFive() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    const onSubmit = async (event: { preventDefault: () => void; currentTarget: HTMLFormElement | undefined; }) => {
+  event.preventDefault();
+  try {
+    const formData = new FormData(event.currentTarget);
+    formData.append("access_key", process.env.WEB3FORMS_API_KEY || "");
 
-    const data = new FormData(e.currentTarget);
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
 
-  };
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: json
+    });
+
+    const res = await response.json();
+
+    if (res.success) {
+      console.log("Success", res);
+    } else {
+      console.error("Error", res);
+    }
+  } catch (err) {
+    console.error("Network error", err);
+  }
+};
+
+
+ 
 
   return (
     <section className="font-mono h-screen flex flex-col items-center justify-center snap-start px-4"
@@ -22,13 +48,12 @@ export default function SlideFive() {
         Reach out to us with your next big idea
       </h1>
      <Form.Root
-        onSubmit={handleSubmit}
+     onSubmit={onSubmit}
         className="space-y-4 w-full max-w-md p-6 rounded-xl shadow-md bg-white text-neutral-900"
         style={{ colorScheme: "light" }} 
       >
         <Form.Field name="name">
-          <div className="flex flex-col gap-1">
-            <Form.Label className="text-sm font-medium text-neutral-800">
+          <div className="flex flex-col gap-1"><Form.Label className="text-sm font-medium text-neutral-800" >
               Name
             </Form.Label>
             <Form.Control asChild>
@@ -104,4 +129,4 @@ export default function SlideFive() {
       </Form.Root>
     </section>
   );
-}
+};
