@@ -10,6 +10,10 @@
   --foreground: white;
 }
 
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+}
 
 body {
   background: var(--background);
