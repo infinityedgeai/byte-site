@@ -63,11 +63,25 @@ export default function SlideFour() {
   };
 
   useEffect(() => {
-    positions.forEach(async ([lat, lon]) => {
-      const country = await fetchCountry(lat, lon);
-      setCountries((prev) => ({ ...prev, [`${lat},${lon}`]: country }));
-    });
-  }, []);
+    const fetchAllCountries = async () => {
+      const countryPromises = positions.map(async ([lat, lon]) => {
+        const country = await fetchCountry(lat, lon);
+        return { key: `${lat},${lon}`, country };
+      });
+      
+      const results = await Promise.all(countryPromises);
+      const newCountries: { [key: string]: string } = {};
+      results.forEach(({ key, country }) => {
+        newCountries[key] = country;
+      });
+      
+      setCountries(newCountries);
+    };
+
+    if (LeafletLoaded) {
+      fetchAllCountries();
+    }
+  }, [LeafletLoaded]);
 
   if (!LeafletLoaded) return <div className="h-[80vh] w-[80vw] flex items-center justify-center">Loading map...</div>;
   return (
@@ -87,15 +101,7 @@ export default function SlideFour() {
             <Marker 
               key={`${lat},${lon}`} 
               position={[lat, lon]}
-              eventHandlers={{
-                add: (e) => {
-                  const marker = e.target;
-                  if (marker._icon) {
-                    marker._icon.setAttribute('data-cy', `marker-${lat}-${lon}`);
-                    marker._icon.setAttribute('data-marker-index', index.toString());
-                  }
-                }
-              }}
+              data-cy={`marker-${lat}-${lon}`}
             >
               <Popup>
                 Country: {countries[`${lat},${lon}`] || "Loading..."}

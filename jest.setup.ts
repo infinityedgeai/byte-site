@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+import 'whatwg-fetch';
 import React from 'react';
 jest.mock('react-d3-cloud-modern', () => ({
   __esModule: true,

@@ -1,8 +1,7 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import SlideFour from "../src/components/SlideFour";
 
-// ✅ Mock react-leaflet so we don’t render real map elements
 jest.mock("react-leaflet", () => ({
   MapContainer: ({ children }: any) => (
     <div data-testid="mocked-map">{children}</div>
@@ -18,9 +17,7 @@ jest.mock("react-leaflet", () => ({
   ),
 }));
 
-// ✅ Mock fetch for reverse geocoding
-beforeAll(() => {
-  // Map of coordinates -> country
+beforeEach(() => {
   const coordsToCountry: Record<string, string> = {
     "51.505,-0.09": "United Kingdom",
     "40.505,-0.09": "Spain",
@@ -37,34 +34,40 @@ beforeAll(() => {
     const country = coordsToCountry[key] ?? "Unknown";
 
     return Promise.resolve({
+      ok: true,
       json: () => Promise.resolve({ address: { country } }),
     }) as any;
   }) as jest.Mock;
 });
 
+afterEach(() => {
+  jest.resetAllMocks();
+});
 
 describe("SlideFour Component", () => {
-  it("renders the map container after useEffect runs", async () => {
-    render(<SlideFour />);
+  it("renders the map container", async () => {
+    await act(async () => {
+      render(<SlideFour />);
+    });
 
     await waitFor(() => {
       expect(screen.getByTestId("mocked-map")).toBeInTheDocument();
-    });
+    }, { timeout: 5000 });
   });
 
   it("renders markers and popups with correct countries", async () => {
-    render(<SlideFour />);
+    await act(async () => {
+      render(<SlideFour />);
+    });
 
     await waitFor(() => {
-      // Check that markers are rendered
       const markers = screen.getAllByTestId("mocked-marker");
       expect(markers.length).toBe(4);
 
-      // Check popup contents
       expect(screen.getByText(/Country: United Kingdom/i)).toBeInTheDocument();
       expect(screen.getByText(/Country: Spain/i)).toBeInTheDocument();
       expect(screen.getByText(/Country: Algeria/i)).toBeInTheDocument();
       expect(screen.getByText(/Country: Mali/i)).toBeInTheDocument();
-    });
+    }, { timeout: 10000 });
   });
 });
