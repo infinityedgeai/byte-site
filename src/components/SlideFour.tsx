@@ -16,8 +16,8 @@ const Marker = dynamic(
   () => import("react-leaflet").then((mod) => mod.Marker),
   { ssr: false }
 );
-const Popup = dynamic(
-  () => import("react-leaflet").then((mod) => mod.Popup),
+const Tooltip = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Tooltip),
   { ssr: false }
 );
 
@@ -102,10 +102,13 @@ export default function SlideFour() {
               key={`${lat},${lon}`} 
               position={[lat, lon]}
               data-cy={`marker-${lat}-${lon}`}
+              data-testid={`marker-${index}`}
             >
-              <Popup>
-                Country: {countries[`${lat},${lon}`] || "Loading..."}
-              </Popup>
+              <Tooltip permanent={false} direction="top" offset={[0, -10]}>
+                <div data-testid={`tooltip-${index}`}>
+                  Country: {countries[`${lat},${lon}`] || "Loading..."}
+                </div>
+              </Tooltip>
             </Marker>
           ))}
         </MapContainer>

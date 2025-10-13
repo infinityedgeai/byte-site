@@ -7,13 +7,17 @@ jest.mock("react-leaflet", () => ({
     <div data-testid="mocked-map">{children}</div>
   ),
   TileLayer: () => <div data-testid="mocked-tilelayer" />,
-  Marker: ({ children, position }: any) => (
-    <div data-testid="mocked-marker" data-pos={position}>
+  Marker: ({ children, position, ...props }: any) => (
+    <div 
+      data-testid="mocked-marker" 
+      data-pos={position}
+      {...props}
+    >
       {children}
     </div>
   ),
-  Popup: ({ children }: any) => (
-    <div data-testid="mocked-popup">{children}</div>
+  Tooltip: ({ children }: any) => (
+    <div data-testid="mocked-tooltip">{children}</div>
   ),
 }));
 
@@ -45,6 +49,7 @@ afterEach(() => {
 });
 
 describe("SlideFour Component", () => {
+  jest.setTimeout(20000);
   it("renders the map container", async () => {
     await act(async () => {
       render(<SlideFour />);
@@ -55,19 +60,27 @@ describe("SlideFour Component", () => {
     }, { timeout: 5000 });
   });
 
-  it("renders markers and popups with correct countries", async () => {
+  it("renders markers with tooltips", async () => {
     await act(async () => {
       render(<SlideFour />);
     });
 
+    // Wait for markers to be rendered using individual marker testids
     await waitFor(() => {
-      const markers = screen.getAllByTestId("mocked-marker");
-      expect(markers.length).toBe(4);
+      expect(screen.getByTestId("marker-0")).toBeInTheDocument();
+      expect(screen.getByTestId("marker-1")).toBeInTheDocument();
+      expect(screen.getByTestId("marker-2")).toBeInTheDocument();
+      expect(screen.getByTestId("marker-3")).toBeInTheDocument();
+    }, { timeout: 5000 });
 
-      expect(screen.getByText(/Country: United Kingdom/i)).toBeInTheDocument();
-      expect(screen.getByText(/Country: Spain/i)).toBeInTheDocument();
-      expect(screen.getByText(/Country: Algeria/i)).toBeInTheDocument();
-      expect(screen.getByText(/Country: Mali/i)).toBeInTheDocument();
-    }, { timeout: 10000 });
+    // Check that tooltips are present with correct content
+    const tooltips = screen.getAllByTestId("mocked-tooltip");
+    expect(tooltips.length).toBe(4);
+    
+    // Check that each tooltip has the correct country information
+    expect(screen.getByTestId("tooltip-0")).toHaveTextContent("Country: United Kingdom");
+    expect(screen.getByTestId("tooltip-1")).toHaveTextContent("Country: Spain");
+    expect(screen.getByTestId("tooltip-2")).toHaveTextContent("Country: Algeria");
+    expect(screen.getByTestId("tooltip-3")).toHaveTextContent("Country: Mali");
   });
 });

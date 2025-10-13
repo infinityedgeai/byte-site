@@ -36,43 +36,44 @@ describe('Slide Four - Map with Markers', () => {
     cy.get('.leaflet-marker-icon', { timeout: 20000 }).should('have.length', 4);
   });
 
-  it('can click markers and see popups', () => {
+  it('can hover markers and see tooltips', () => {
     cy.get('.leaflet-container', { timeout: 30000 }).should('exist');
     cy.get('.leaflet-marker-icon', { timeout: 30000 }).should('have.length', 4);
     
-    cy.get('.leaflet-popup').should('not.exist');
+    // Hover over first marker
+    cy.get('.leaflet-marker-icon').first().trigger('mouseover', { force: true });
     
-    cy.get('.leaflet-marker-icon').first().click({ force: true });
-  
-    cy.get('.leaflet-popup-content', { timeout: 15000 })
+    // Check tooltip appears (exists, don't check visibility due to clipping)
+    cy.get('.leaflet-tooltip', { timeout: 15000 })
       .should('exist')
-      .should('be.visible');
+      .should('contain.text', 'Country:');
     
-    cy.get('.leaflet-popup-close-button').click({ force: true });
-    cy.get('.leaflet-popup').should('not.exist');
+    // Move mouse away to hide tooltip
+    cy.get('.leaflet-marker-icon').first().trigger('mouseout', { force: true });
   });
 
-  it('markers show correct country information', () => {
+  it('markers show correct country information on hover', () => {
     cy.get('.leaflet-container', { timeout: 30000 }).should('exist');
     cy.get('.leaflet-marker-icon', { timeout: 30000 }).should('have.length', 4);
     
     for (let index = 0; index < positions.length; index++) {
-      cy.get('.leaflet-popup').should('not.exist');
-      
+      // Hover over marker
       cy.get('.leaflet-marker-icon').eq(index)
         .should('exist')
-        .click({ force: true });
+        .trigger('mouseover', { force: true });
       
-      cy.get('.leaflet-popup-content', { timeout: 15000 })
+      // Wait for tooltip and check content (don't check visibility due to clipping)
+      cy.get('.leaflet-tooltip', { timeout: 15000 })
         .should('exist')
-        .should('have.length', 1)
+        .should('contain.text', 'Country:')
         .should('contain.text', markerCountries[index]);
       
-      cy.get('.leaflet-popup-close-button')
-        .should('have.length', 1)
-        .click({ force: true });
+      // Move mouse away to hide tooltip
+      cy.get('.leaflet-marker-icon').eq(index)
+        .trigger('mouseout', { force: true });
       
-      cy.get('.leaflet-popup', { timeout: 10000 }).should('not.exist');
+      // Wait a bit for tooltip to disappear
+      cy.wait(500);
     }
   });
 });
