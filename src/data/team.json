@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Katie",
+    "role": "Senior Software Engineer",
+    "location": "Athens, Greece",
+    "country": "Greece",
+    "coordinates": [37.9755, 23.7348]
+  },
+  {
+    "id": 2,
+    "name": "Edgar",
+    "role": "Byte.AI Founder / Senior Software Engineer",
+    "location": "Manchester, UK",
+    "country": "United Kingdom",
+    "coordinates": [53.4808, -2.2426]
+  }
+]
