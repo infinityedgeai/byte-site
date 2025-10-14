@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import "leaflet/dist/leaflet.css";
-
+import teamData from "../data/team.json";
+const centerofEurope: [number, number] = [50.0, 10.0];
 const MapContainer = dynamic(
   () => import("react-leaflet").then((mod) => mod.MapContainer),
   { ssr: false }
@@ -16,8 +17,8 @@ const Marker = dynamic(
   () => import("react-leaflet").then((mod) => mod.Marker),
   { ssr: false }
 );
-const Popup = dynamic(
-  () => import("react-leaflet").then((mod) => mod.Popup),
+const Tooltip = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Tooltip),
   { ssr: false }
 );
 
@@ -40,55 +41,21 @@ export default function SlideFour() {
       });
     });
   }, []);
-  const positions: [number, number][] = [
-    [51.505, -0.09],//uk
-    [40.505, -0.09],//spain
-    [30.505, -0.09],//algeria
-    [20.505, -0.09],//mali
-  ];
 
-  const [countries, setCountries] = useState<{ [key: string]: string }>({});
+  const positions: [number, number][] = teamData.map(member => member.coordinates as [number, number]);
 
-  const fetchCountry = async (lat: number, lon: number) => {
-    try {
-      const res = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
-      );
-      const data = await res.json();
-      return data.address?.country || "Unknown";
-    } catch (error) {
-      console.error("Error fetching country:", error);
-      return "Unknown";
-    }
+  const getTeamMemberByCoordinates = (lat: number, lon: number) => {
+    return teamData.find(member => 
+      member.coordinates[0] === lat && member.coordinates[1] === lon
+    );
   };
-
-  useEffect(() => {
-    const fetchAllCountries = async () => {
-      const countryPromises = positions.map(async ([lat, lon]) => {
-        const country = await fetchCountry(lat, lon);
-        return { key: `${lat},${lon}`, country };
-      });
-      
-      const results = await Promise.all(countryPromises);
-      const newCountries: { [key: string]: string } = {};
-      results.forEach(({ key, country }) => {
-        newCountries[key] = country;
-      });
-      
-      setCountries(newCountries);
-    };
-
-    if (LeafletLoaded) {
-      fetchAllCountries();
-    }
-  }, [LeafletLoaded]);
 
   if (!LeafletLoaded) return <div className="h-[80vh] w-[80vw] flex items-center justify-center">Loading map...</div>;
   return (
     <section className="flex items-center justify-center h-screen w-full snap-start">
       <div className="w-[80vw] h-[80vh]">
         <MapContainer
-          center={positions[2]}
+          center={centerofEurope}
           zoom={4}
           scrollWheelZoom={false}
           style={{ width: "100%", height: "100%" }}
@@ -97,17 +64,31 @@ export default function SlideFour() {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
-          {positions.map(([lat, lon], index) => (
-            <Marker 
-              key={`${lat},${lon}`} 
-              position={[lat, lon]}
-              data-cy={`marker-${lat}-${lon}`}
-            >
-              <Popup>
-                Country: {countries[`${lat},${lon}`] || "Loading..."}
-              </Popup>
-            </Marker>
-          ))}
+          {positions.map(([lat, lon], index) => {
+            const teamMember = getTeamMemberByCoordinates(lat, lon);
+            return (
+              <Marker 
+                key={`${lat},${lon}`} 
+                position={[lat, lon]}
+                data-cy={`marker-${lat}-${lon}`}
+                data-testid={`marker-${index}`}
+              >
+                <Tooltip permanent={false} direction="top" offset={[-15, -20]}>
+                  <div data-testid={`tooltip-${index}`} className="text-center p-2 bg-white rounded shadow-lg border">
+                    {teamMember ? (
+                      <>
+                        <div className="font-bold text-gray-800">{teamMember.name}</div>
+                        <div className="text-sm text-gray-600">{teamMember.role}</div>
+                        <div className="text-xs text-gray-500">{teamMember.location}</div>
+                      </>
+                    ) : (
+                      <div>Team Member</div>
+                    )}
+                  </div>
+                </Tooltip>
+              </Marker>
+            );
+          })}
         </MapContainer>
       </div>
     </section>
