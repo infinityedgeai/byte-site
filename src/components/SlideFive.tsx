@@ -1,78 +1,80 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import * as Form from "@radix-ui/react-form";
 
 export default function SlideFive() {
-    const onSubmit = async (event: { preventDefault: () => void; currentTarget: HTMLFormElement | undefined; }) => {
+  const [status, setStatus] = useState<string | null>(null);
+
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();
+
+  const formData = new FormData(event.currentTarget);
+  const name = formData.get("name");
+  const email = formData.get("email");
+  const message = formData.get("message");
+
   try {
-    const formData = new FormData(event.currentTarget);
-    formData.append("access_key", process.env.WEB3FORMS_API_KEY || "");
-
-    const object = Object.fromEntries(formData);
-    const json = JSON.stringify(object);
-
-    const response = await fetch("https://api.web3forms.com/submit", {
+    const response = await fetch("/api/contact", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: json
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, message }),
     });
 
-    const res = await response.json();
+    if (!response.ok) {
+      throw new Error(`Server responded with ${response.status}`);
+    }
 
-    if (res.success) {
-      console.log("Success", res);
+    const data = await response.json();
+
+    if (data.success) {
+      alert("✅ Message sent successfully!");
     } else {
-      console.error("Error", res);
+      alert("❌ Error: " + (data.error || "Something went wrong"));
     }
   } catch (err) {
-    console.error("Network error", err);
+    console.error("Network error:", err);
+    alert("❌ Network error. Please try again later.");
   }
 };
 
 
- 
 
   return (
-    <section className="font-mono h-screen flex flex-col items-center justify-center snap-start px-4"
-        style={{
-          backgroundColor: "var(--background)",
-          color: "var(--foreground)",
-        }}
-      >
+    <section
+      className="font-mono h-screen flex flex-col items-center justify-center snap-start px-4"
+      style={{
+        backgroundColor: "var(--background)",
+        color: "var(--foreground)",
+      }}
+    >
       <h1 className="text-2xl font-bold mb-6 text-center">
         Reach out to us with your next big idea
       </h1>
-     <Form.Root
-     onSubmit={onSubmit}
+
+      <Form.Root
+        onSubmit={onSubmit}
         className="space-y-4 w-full max-w-md p-6 rounded-xl shadow-md bg-white text-neutral-900"
-        style={{ colorScheme: "light" }} 
+        style={{ colorScheme: "light" }}
       >
         <Form.Field name="name">
-          <div className="flex flex-col gap-1"><Form.Label className="text-sm font-medium text-neutral-800" >
+          <div className="flex flex-col gap-1">
+            <Form.Label className="text-sm font-medium text-neutral-800">
               Name
             </Form.Label>
             <Form.Control asChild>
               <input
                 type="text"
                 required
-                className="w-full rounded-lg border px-3 py-2
-                           bg-white text-neutral-900 placeholder-neutral-500 border-neutral-300
-                           focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full rounded-lg border px-3 py-2 bg-white text-neutral-900 placeholder-neutral-500 border-neutral-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </Form.Control>
-            <Form.Message
-              match="valueMissing"
-              className="text-sm text-red-600"
-            >
+            <Form.Message match="valueMissing" className="text-sm text-red-600">
               Please enter your name
             </Form.Message>
           </div>
         </Form.Field>
+
         <Form.Field name="email">
           <div className="flex flex-col gap-1">
             <Form.Label className="text-sm font-medium text-neutral-800">
@@ -82,9 +84,7 @@ export default function SlideFive() {
               <input
                 type="email"
                 required
-                className="w-full rounded-lg border px-3 py-2
-                           bg-white text-neutral-900 placeholder-neutral-500 border-neutral-300
-                           focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full rounded-lg border px-3 py-2 bg-white text-neutral-900 placeholder-neutral-500 border-neutral-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </Form.Control>
             <Form.Message match="valueMissing" className="text-sm text-red-600">
@@ -105,28 +105,36 @@ export default function SlideFive() {
               <textarea
                 rows={4}
                 required
-                className="w-full rounded-lg border px-3 py-2
-                           bg-white text-neutral-900 placeholder-neutral-500 border-neutral-300
-                           focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full rounded-lg border px-3 py-2 bg-white text-neutral-900 placeholder-neutral-500 border-neutral-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </Form.Control>
-            <Form.Message
-              match="valueMissing"
-              className="text-sm text-red-600"
-            >
+            <Form.Message match="valueMissing" className="text-sm text-red-600">
               Please enter a message
             </Form.Message>
           </div>
         </Form.Field>
+
         <Form.Submit asChild>
           <button
             type="submit"
             className="w-full rounded-lg bg-black px-4 py-2 text-white font-medium hover:bg-indigo-700 transition-colors"
+            disabled={status === "loading"}
           >
-            Send Message
+            {status === "loading" ? "Sending..." : "Send Message"}
           </button>
         </Form.Submit>
+
+        {status === "success" && (
+          <p className="text-green-600 text-sm text-center">
+            ✅ Message sent successfully!
+          </p>
+        )}
+        {status === "error" && (
+          <p className="text-red-600 text-sm text-center">
+            ❌ Something went wrong. Please try again.
+          </p>
+        )}
       </Form.Root>
     </section>
   );
-};
+}
