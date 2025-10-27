@@ -52,8 +52,8 @@ export default function SlideFour() {
 
   if (!LeafletLoaded) return <div className="h-[80vh] w-[80vw] flex items-center justify-center">Loading map...</div>;
   return (
-    <section className="flex items-center justify-center h-screen w-full snap-start">
-      <div className="w-[80vw] h-[80vh]">
+    <section className="flex items-center justify-center h-screen w-full snap-start scrollbar-hide">
+      <div className="w-[80vw] h-[80vh] scrollbar-hide">
         <MapContainer
           center={centerofEurope}
           zoom={4}

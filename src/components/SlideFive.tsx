@@ -42,7 +42,7 @@ export default function SlideFive() {
 
   return (
     <section
-      className="font-mono h-screen flex flex-col items-center justify-center snap-start px-4"
+      className="font-mono h-screen flex flex-col items-center justify-center snap-start px-4 scrollbar-hide"
       style={{
         backgroundColor: "var(--background)",
         color: "var(--foreground)",

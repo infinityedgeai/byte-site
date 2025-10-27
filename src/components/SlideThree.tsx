@@ -151,7 +151,7 @@ export default function SlideThree() {
 
   return (
     <section
-      ref={sectionRef} className="flex min-h-screen w-full items-center justify-center snap-start" data-testid="SlideThree">
+      ref={sectionRef} className="flex min-h-screen w-full items-center justify-center snap-start scrollbar-hide" data-testid="SlideThree">
       <WordCloudComponent start={startAnimation} parentRef={sectionRef} />
     </section>
   );

@@ -16,8 +16,8 @@ export default function Home() {
   const listRef = useRef<HTMLUListElement | null>(null);
   const typingRef = useRef<HTMLLIElement | null>(null);
   const loopRef = useRef<HTMLLIElement | null>(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const slides = [
     <SlideOne
@@ -158,46 +158,26 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    let isScrolling = false;
-    let timeout: NodeJS.Timeout;
-
-    const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      
-      if (isScrolling) return;
-      
-      const direction = e.deltaY > 0 ? 1 : -1;
-      const newSlide = Math.max(0, Math.min(totalSlides - 1, currentSlide + direction));
-      
-      if (newSlide !== currentSlide) {
-        isScrolling = true;
-        setCurrentSlide(newSlide);
-        timeout = setTimeout(() => {
-          isScrolling = false;
-        }, 800);
-      }
+    const container = containerRef.current;
+    if (!container) return;
+    const handleScroll = () => {
+      const scrollPosition = container.scrollTop;
+      const slideIndex = Math.round(scrollPosition / window.innerHeight);
+      setCurrentSlide(slideIndex);
     };
 
-    window.addEventListener('wheel', handleWheel, { passive: false });
-
+    container.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener('wheel', handleWheel);
-      if (timeout) clearTimeout(timeout);
+      container.removeEventListener('scroll', handleScroll);
     };
-  }, [currentSlide, totalSlides]);
+  }, []);
 
   return (
-    <div className="w-full overflow-hidden h-screen bg-black text-white">
-      <div 
-        ref={containerRef}
-        className="w-full h-full"
-        style={{
-          transform: `translateY(-${currentSlide * 100}vh)`,
-          transition: 'transform 0.8s ease-in-out',
-        }}
-      >
-        {slides}
-      </div>
+    <div 
+      ref={containerRef}
+      className="w-full overflow-y-auto h-screen bg-black text-white scroll-smooth snap-y snap-mandatory scrollbar-hide"
+    >
+      {slides}
     </div>
   );
 }

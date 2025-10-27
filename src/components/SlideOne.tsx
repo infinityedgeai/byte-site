@@ -60,8 +60,8 @@ export default function SlideOne({
   ] as const;
 
   return (
-    <section className="h-screen flex items-center justify-center snap-start">
-      <div className="font-sans min-h-screen w-full p-8 sm:p-20 grid grid-rows-[auto_1fr] gap-12 antialiased">
+    <section className="h-screen flex items-center justify-center snap-start scrollbar-hide">
+      <div className="font-sans min-h-screen w-full p-8 sm:p-20 grid grid-rows-[auto_1fr] gap-12 antialiased scrollbar-hide">
         <main className="mx-auto w-full max-w-6xl">
           <div
             ref={bubblesRootRef}
