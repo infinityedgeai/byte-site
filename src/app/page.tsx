@@ -140,7 +140,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-full overflow-y-auto h-screen bg-black text-white">
+    <div className="w-full overflow-y-auto snap-y snap-mandatory h-[calc(100vh-5rem)] bg-black text-white">
       <SlideOne
         bubblesRootRef={bubblesRootRef}
         listRef={listRef}
