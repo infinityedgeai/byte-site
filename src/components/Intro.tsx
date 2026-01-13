@@ -2,20 +2,21 @@
 
 import React, { RefObject } from "react";
 import { FileText, Palette, Monitor, Bug, Upload } from "lucide-react";
+import Link from "next/link";
 
-interface SlideOneProps {
+interface IntroProps {
   bubblesRootRef: RefObject<HTMLDivElement | null>;
   listRef: RefObject<HTMLUListElement | null>;
   typingRef: RefObject<HTMLLIElement | null>;
   loopRef: RefObject<HTMLLIElement | null>;
 }
 
-export default function SlideOne({
+export default function Intro({
   bubblesRootRef,
   listRef,
   typingRef,
   loopRef,
-}: SlideOneProps) {
+}: IntroProps) {
   const bubbles = [
     {
       key: "req",
@@ -60,7 +61,7 @@ export default function SlideOne({
   ] as const;
 
   return (
-    <section className="h-screen flex items-center justify-center">
+    <section className="h-screen flex items-center justify-center snap-start bg-background text-foreground">
       <div className="font-sans min-h-screen w-full p-8 sm:p-20 grid grid-rows-[auto_1fr] gap-12 antialiased">
         <main className="mx-auto w-full max-w-6xl">
           <div
@@ -78,7 +79,7 @@ export default function SlideOne({
                 >
                   <Icon className={`w-12 h-12 ${iconColor}`} aria-hidden="true" />
                 </div>
-                <span className="mt-3 text-sm font-semibold text-white/90 text-center">
+                <span className="mt-3 text-sm font-semibold text-foreground/90 text-center">
                   {label}
                 </span>
               </div>
@@ -89,8 +90,8 @@ export default function SlideOne({
             ref={listRef}
             className="font-mono list-inside text-sm/6 text-center sm:text-left max-w-3xl mx-auto sm:mx-0"
           >
-            <li className="mb-5 tracking-[0.3em] uppercase text-white">
-              Software Development Services.
+            <li className="mb-5 tracking-[0.3em] uppercase">
+              <span className="text-primary font-bold">Software Development</span> Services.
             </li>
 
             <li
@@ -105,6 +106,12 @@ export default function SlideOne({
               style={{ whiteSpace: "pre-wrap" }}
             />
           </ul>
+          <Link
+            href="/blog/5-annoying-tasks"
+            className="inline-block mt-8 px-6 py-3 bg-primary text-background font-semibold rounded-lg hover:bg-primary/80 transition-colors"
+          >
+            Read: The 5 Most Annoying Tasks in Every Business
+          </Link>
         </main>
       </div>
     </section>

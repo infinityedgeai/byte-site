@@ -7,11 +7,7 @@ import Link from 'next/link';
 export function MenuBar() {
   return (
 <header
-  className="fixed top-0 left-0 w-full flex justify-between items-center p-4 shadow z-50"
-  style={{
-    backgroundColor: 'var(--background)',
-    color: 'var(--foreground)',
-  }}
+  className="fixed top-0 left-0 w-full flex justify-between items-center p-4 shadow z-50 bg-background text-foreground"
 >
   <Link href="/" aria-label="Home" className="flex items-center space-x-2">
     <Image src="/logo.png" alt="Logo" width={48} height={48} />

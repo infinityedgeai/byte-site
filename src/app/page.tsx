@@ -3,11 +3,9 @@
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { TextPlugin } from "gsap/dist/TextPlugin";
-import SlideOne from "@/components/SlideOne";
-import SlideTwo from "@/components/SlideTwo";
-import SlideFour from "@/components/SlideFour";
-import SlideFive from "@/components/SlideFive";
-import SlideThree from "@/components/SlideThree";
+import Intro from "@/components/Intro";
+import ContactForm from "@/components/ContactForm";
+// import Demos from "@/components/Demos"; // Temporarily disabled - WIP
 
 gsap.registerPlugin(TextPlugin);
 
@@ -53,7 +51,7 @@ export default function Home() {
 
         if (loopRef.current) {
           const el = loopRef.current;
-          const words = ["Coders", "Devs", "AI"];
+          const words = ["Software Engineers", "AI Specialists", "Data Experts"];
           const loopTl = gsap.timeline({ repeat: -1, repeatDelay: D(0.8) });
 
           words.forEach((word) => {
@@ -140,17 +138,15 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-full overflow-y-auto snap-y snap-mandatory h-[calc(100vh-5rem)] bg-black text-white">
-      <SlideOne
+    <div className="w-full overflow-y-auto snap-y snap-mandatory h-[calc(100vh-5rem)]">
+      <Intro
         bubblesRootRef={bubblesRootRef}
         listRef={listRef}
         typingRef={typingRef}
         loopRef={loopRef}
       />
-      <SlideTwo />
-      <SlideThree />
-       <SlideFour />
-      <SlideFive />
+      {/* <Demos /> */}
+      <ContactForm />
     </div>
   );
 }
