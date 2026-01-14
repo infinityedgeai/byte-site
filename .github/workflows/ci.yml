@@ -1,13 +1,15 @@
-name: CI
+name: CI/CD
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 env:
   NODE_VERSION: ${{ vars.NODE_VERSION }}
+  AZURE_WEBAPP_NAME: 'byte'
 
 jobs:
   test:
@@ -44,11 +46,14 @@ jobs:
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
 
-  build-artifact:
-    name: Build Artifact
+  deploy:
+    name: Deploy to Azure
     runs-on: ubuntu-latest
     needs: test
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment:
+      name: Production
+      url: https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net
 
     steps:
       - name: Checkout code
@@ -66,9 +71,9 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      - name: Deploy to Azure
+        uses: azure/webapps-deploy@v3
         with:
-          name: nextjs-build
-          path: .next/
-          retention-days: 7
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: .
