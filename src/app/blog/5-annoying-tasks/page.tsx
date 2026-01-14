@@ -24,7 +24,7 @@ export default function BlogPost() {
             Every business has its own blend of big ambitions and everyday friction.
           </p>
           <p>
-            But here's the strange part: no matter the industry — travel, finance, tech, operations, creative, you name it — the friction always shows up in the same places.
+            But here&apos;s the strange part: no matter the industry — travel, finance, tech, operations, creative, you name it — the friction always shows up in the same places.
           </p>
 
           <p className="font-semibold">
@@ -35,14 +35,14 @@ export default function BlogPost() {
           </p>
 
           <p>
-            And those annoyances aren't trivial. They're early warning signs about the way modern organisations handle information, complexity and collaboration.
+            And those annoyances aren&apos;t trivial. They&apos;re early warning signs about the way modern organisations handle information, complexity and collaboration.
           </p>
 
           <p>
             When you zoom out, these small frustrations tell a much bigger story about the future of work.
           </p>
 
-          <p className="font-semibold">Let's break it down.</p>
+          <p className="font-semibold">Let&apos;s break it down.</p>
 
           <hr className="my-8 border-foreground/20" />
 
@@ -51,17 +51,17 @@ export default function BlogPost() {
               1. Repetitive Questions Are Really About Information Access
             </h2>
             <p>
-              When teams answer the same internal questions over and over, it's not a people problem. It's a <em>system design</em> problem.
+              When teams answer the same internal questions over and over, it&apos;s not a people problem. It&apos;s a <em>system design</em> problem.
             </p>
             <p className="font-semibold">Repetitive questions reveal:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Information is scattered</li>
               <li>Processes are unclear</li>
-              <li>Knowledge lives in people's heads instead of shared spaces</li>
+              <li>Knowledge lives in people&apos;s heads instead of shared spaces</li>
               <li>Employees spend time <em>seeking</em> instead of <em>doing</em></li>
             </ul>
             <p>
-              In a world where speed matters, "information debt" becomes expensive. If people rely on memory or oral tradition to operate, the organisation is already slowing itself down.
+              In a world where speed matters, &quot;information debt&quot; becomes expensive. If people rely on memory or oral tradition to operate, the organisation is already slowing itself down.
             </p>
             <p className="font-bold text-primary">
               Signal for the future:
@@ -78,17 +78,17 @@ export default function BlogPost() {
               2. Searching for Files Shows the Hidden Cognitive Tax of Modern Work
             </h2>
             <p>
-              Everyone knows the feeling: You're sure the file exists. You're sure you've seen it. You're sure it's somewhere.
+              Everyone knows the feeling: You&apos;re sure the file exists. You&apos;re sure you&apos;ve seen it. You&apos;re sure it&apos;s somewhere.
             </p>
             <p>
-              The time lost isn't the real story. The mental load is.
+              The time lost isn&apos;t the real story. The mental load is.
             </p>
             <p className="font-semibold">Every search that fails adds micro-friction:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>interrupted flow</li>
               <li>creative momentum lost</li>
               <li>duplicated effort</li>
-              <li>frustration disguised as "just part of the job"</li>
+              <li>frustration disguised as &quot;just part of the job&quot;</li>
             </ul>
             <p>
               When a team spends more energy <em>locating</em> work than executing it, it signals that the organisation has outgrown its own internal architecture.
@@ -97,7 +97,7 @@ export default function BlogPost() {
               Signal for the future:
             </p>
             <p>
-              Tools won't just store information. They'll <em>surface it</em> — proactively, contextually, and without friction.
+              Tools won&apos;t just store information. They&apos;ll <em>surface it</em> — proactively, contextually, and without friction.
             </p>
           </section>
 
@@ -114,7 +114,7 @@ export default function BlogPost() {
               Paste again.
             </p>
             <p>
-              It feels harmless, but it's actually one of the clearest indicators that an organisation's digital ecosystem isn't talking to itself.
+              It feels harmless, but it&apos;s actually one of the clearest indicators that an organisation&apos;s digital ecosystem isn&apos;t talking to itself.
             </p>
             <p className="font-semibold">When humans become the integration layer between systems, you see:</p>
             <ul className="list-disc pl-6 space-y-2">
@@ -130,7 +130,7 @@ export default function BlogPost() {
               Signal for the future:
             </p>
             <p>
-              Interoperability isn't a "nice to have". It's the baseline for any organisation that wants to move fast without breaking itself.
+              Interoperability isn&apos;t a &quot;nice to have&quot;. It&apos;s the baseline for any organisation that wants to move fast without breaking itself.
             </p>
           </section>
 
@@ -147,7 +147,7 @@ export default function BlogPost() {
               Sales decks.
             </p>
             <p>
-              These documents change constantly — not because the content is new, but because the organisation's processes have drifted.
+              These documents change constantly — not because the content is new, but because the organisation&apos;s processes have drifted.
             </p>
             <p className="font-semibold">When people reboot a document every time, it means:</p>
             <ul className="list-disc pl-6 space-y-2">
@@ -174,13 +174,13 @@ export default function BlogPost() {
               5. Chasing Updates Reveals Coordination Fragility
             </h2>
             <p>
-              "Where are we with this?"<br />
-              "Has someone approved it?"<br />
-              "Who's responsible for the next step?"<br />
-              "Is the spreadsheet up to date?"
+              &quot;Where are we with this?&quot;<br />
+              &quot;Has someone approved it?&quot;<br />
+              &quot;Who&apos;s responsible for the next step?&quot;<br />
+              &quot;Is the spreadsheet up to date?&quot;
             </p>
             <p>
-              When simple projects stall because nobody can see the full picture, that's not communication failure. It's a visibility problem.
+              When simple projects stall because nobody can see the full picture, that&apos;s not communication failure. It&apos;s a visibility problem.
             </p>
             <p>
               Work gets lost in DMs, emails, threads and boards. Teams spend more time syncing than progressing.
@@ -208,16 +208,16 @@ export default function BlogPost() {
 
             <div className="my-8 p-6 border-l-4 border-accent bg-accent/10 rounded-r-lg">
               <p className="font-bold text-lg">
-                Most inefficiency in modern work is not caused by big problems — it's created by thousands of invisible micro-tasks nobody notices, questions, or challenges.
+                Most inefficiency in modern work is not caused by big problems — it&apos;s created by thousands of invisible micro-tasks nobody notices, questions, or challenges.
               </p>
             </div>
 
             <p>
-              These "annoyances" are the smoke. Underneath them is the fire: how companies structure knowledge, integrate tools, design processes and enable people to do their best work.
+              These &quot;annoyances&quot; are the smoke. Underneath them is the fire: how companies structure knowledge, integrate tools, design processes and enable people to do their best work.
             </p>
 
             <p>
-              Automation is not the headline. It's the byproduct of a deeper movement:
+              Automation is not the headline. It&apos;s the byproduct of a deeper movement:
             </p>
 
             <div className="my-8 p-6 border-l-4 border-primary bg-primary/10 rounded-r-lg">
@@ -234,18 +234,18 @@ export default function BlogPost() {
               Where Byte Engineering Fits Into This Shift
             </h2>
             <p>
-              Byte Engineering's work centres on understanding these patterns — not as technical glitches, but as signals of how modern work is evolving.
+              Byte Engineering&apos;s work centres on understanding these patterns — not as technical glitches, but as signals of how modern work is evolving.
             </p>
             <p>
               The team observes these friction points across industries and builds personalised software that reduces the hidden labour inside organisations.
             </p>
             <p>
-              Not automation for automation's sake.<br />
-              Not tools for the sake of looking "innovative".<br />
+              Not automation for automation&apos;s sake.<br />
+              Not tools for the sake of looking &quot;innovative&quot;.<br />
               But targeted interventions that remove the unnecessary weight teams have been carrying for years.
             </p>
             <p className="font-semibold">
-              If the future of work is about anything, it's this:
+              If the future of work is about anything, it&apos;s this:
             </p>
 
             <div className="my-8 p-6 border-l-4 border-secondary bg-secondary/10 rounded-r-lg">
@@ -259,7 +259,7 @@ export default function BlogPost() {
             </p>
 
             <p>
-              That's the heart of operational evolution. And the companies that embrace it early will be the ones that move faster, adapt quicker and outpace the competition.
+              That&apos;s the heart of operational evolution. And the companies that embrace it early will be the ones that move faster, adapt quicker and outpace the competition.
             </p>
           </section>
         </div>

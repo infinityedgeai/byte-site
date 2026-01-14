@@ -7,8 +7,8 @@ export default function ContactForm() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const data = new FormData(e.currentTarget);
-
+    // TODO: implement form submission
+    new FormData(e.currentTarget);
   };
 
   return (
