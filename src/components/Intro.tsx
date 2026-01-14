@@ -1,6 +1,6 @@
 "use client";
 
-import React, { RefObject } from "react";
+import React, { RefObject, useState, useEffect } from "react";
 import { FileText, Palette, Monitor, Bug, Upload } from "lucide-react";
 import Link from "next/link";
 
@@ -17,6 +17,8 @@ export default function Intro({
   typingRef,
   loopRef,
 }: IntroProps) {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
   const bubbles = [
     {
       key: "req",
@@ -60,24 +62,34 @@ export default function Intro({
     },
   ] as const;
 
+  // Auto-advance slideshow on mobile
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % bubbles.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [bubbles.length]);
+
   return (
     <section className="h-screen flex items-center justify-center snap-start bg-background text-foreground">
       <div className="font-sans min-h-screen w-full p-8 sm:p-20 grid grid-rows-[auto_1fr] gap-12 antialiased">
         <main className="mx-auto w-full max-w-6xl">
           <div
             ref={bubblesRootRef}
-            className="mb-12 w-full flex items-center justify-between gap-6 flex-wrap"
+            className="mb-12 w-full flex items-center justify-center md:justify-between gap-6 flex-wrap"
           >
-            {bubbles.map(({ key, label, Icon, border, iconColor, aria }) => (
+            {bubbles.map(({ key, label, Icon, border, iconColor, aria }, index) => (
               <div
                 key={key}
                 aria-label={aria}
-                className="bubble flex flex-col items-center"
+                className={`bubble flex flex-col items-center transition-opacity duration-500 ${
+                  index === currentSlide ? "block" : "hidden md:block"
+                }`}
               >
                 <div
-                  className={`w-28 h-28 rounded-full border-4 ${border} grid place-items-center`}
+                  className={`w-24 h-24 md:w-28 md:h-28 rounded-full border-4 ${border} grid place-items-center`}
                 >
-                  <Icon className={`w-12 h-12 ${iconColor}`} aria-hidden="true" />
+                  <Icon className={`w-10 h-10 md:w-12 md:h-12 ${iconColor}`} aria-hidden="true" />
                 </div>
                 <span className="mt-3 text-sm font-semibold text-foreground/90 text-center">
                   {label}

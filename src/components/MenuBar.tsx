@@ -11,7 +11,15 @@ export function MenuBar() {
 >
   <Link href="/" aria-label="Home" className="flex items-center space-x-2">
     <Image src="/logo.png" alt="Logo" width={48} height={48} />
-    <Image src="/byte.png" alt="Byte Engineering" width={180} height={30} />
+    <span
+      className="text-4xl font-bold tracking-tight"
+      style={{
+        WebkitTextStroke: '1.5px var(--foreground)',
+        color: 'color-mix(in srgb, var(--background) 92%, black 8%)',
+      }}
+    >
+      Byte Engineering
+    </span>
   </Link>
   <ThemeToggle />
 </header>
