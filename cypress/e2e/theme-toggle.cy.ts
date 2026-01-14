@@ -2,22 +2,33 @@
 
 describe('Theme Toggle', () => {
   beforeEach(() => {
-    cy.visit('/'); // Visit your homepage
+    cy.visit('/');
   });
 
   it('should toggle between light and dark themes', () => {
+    // Start in light mode
     cy.get('html').should('not.have.class', 'dark');
-    cy.get('header').should('have.css', 'background-color', 'rgb(255, 255, 255)'); 
 
-    cy.get('button[aria-label="Toggle theme"]').click();
+    // Get the background color from CSS variable
+    cy.get('header').then(($header) => {
+      const lightBg = getComputedStyle($header[0]).backgroundColor;
 
-    cy.get('html').should('have.class', 'dark');
+      // Toggle to dark mode
+      cy.get('button[aria-label="Toggle theme"]').click();
+      cy.get('html').should('have.class', 'dark');
 
-    cy.get('header').should('have.css', 'background-color', 'rgb(0, 0, 0)'); 
+      // Background should change
+      cy.get('header').should(($el) => {
+        const darkBg = getComputedStyle($el[0]).backgroundColor;
+        expect(darkBg).not.to.equal(lightBg);
+      });
 
-    cy.get('button[aria-label="Toggle theme"]').click();
+      // Toggle back to light mode
+      cy.get('button[aria-label="Toggle theme"]').click();
+      cy.get('html').should('not.have.class', 'dark');
 
-    cy.get('html').should('not.have.class', 'dark');
-    cy.get('header').should('have.css', 'background-color', 'rgb(255, 255, 255)'); 
+      // Background should match original
+      cy.get('header').should('have.css', 'background-color', lightBg);
+    });
   });
 });

@@ -1,7 +1,7 @@
 describe('Home page animations', () => {
   const typingText =
     'Our development team guides and enables you in every step of the process towards making your product vision a reality.';
-  const loopWords = ['Coders', 'Devs', 'AI'];
+  const loopWords = ['Software Engineers', 'AI Specialists', 'Data Experts'];
 
   const sel = {
     bubbles: '.bubble',
