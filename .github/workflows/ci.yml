@@ -76,6 +76,11 @@ jobs:
           cp -r public .next/standalone/
           cp -r .next/static .next/standalone/.next/
 
+          # Update package.json so Azure runs the correct start command
+          cd .next/standalone
+          jq '.scripts.start = "node server.js"' package.json > tmp.json
+          mv tmp.json package.json
+
       - name: Deploy to Azure
         uses: azure/webapps-deploy@v3
         with:
