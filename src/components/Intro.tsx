@@ -18,6 +18,22 @@ export default function Intro({
   loopRef,
 }: IntroProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobile) return;
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % 5);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [isMobile]);
 
   const bubbles = [
     {
@@ -62,14 +78,6 @@ export default function Intro({
     },
   ] as const;
 
-  // Auto-advance slideshow on mobile
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % bubbles.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [bubbles.length]);
-
   return (
     <section className="h-screen flex items-center justify-center snap-start bg-background text-foreground">
       <div className="font-sans min-h-screen w-full p-8 sm:p-20 grid grid-rows-[auto_1fr] gap-12 antialiased">
@@ -82,8 +90,8 @@ export default function Intro({
               <div
                 key={key}
                 aria-label={aria}
-                className={`bubble flex flex-col items-center transition-opacity duration-500 ${
-                  index === currentSlide ? "block" : "hidden md:block"
+                className={`bubble flex flex-col items-center ${
+                  isMobile && index !== currentSlide ? "hidden" : ""
                 }`}
               >
                 <div
