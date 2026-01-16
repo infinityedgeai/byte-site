@@ -12,10 +12,10 @@ export default function ContactForm() {
   };
 
   return (
-    <section className="font-mono h-screen flex flex-col items-center justify-center snap-start px-4 bg-background text-foreground"
+    <section className="h-screen flex flex-col items-center justify-center snap-start px-4 bg-background text-foreground"
       >
-      <h1 className="text-2xl font-bold mb-6 text-center">
-        Reach out to us with your next <span className="text-primary">big idea</span>
+      <h1 className="font-mono text-2xl font-bold mb-6 text-center">
+        Reach out to us with your next <span className="text-secondary">big idea</span>
       </h1>
      <Form.Root
         onSubmit={handleSubmit}

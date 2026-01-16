@@ -12,7 +12,7 @@ export function MenuBar() {
   <Link href="/" aria-label="Home" className="flex items-center space-x-2">
     <Image src="/logo.png" alt="Logo" width={48} height={48} />
     <span
-      className="text-4xl font-bold tracking-tight"
+      className="font-mono text-4xl font-bold tracking-tight"
       style={{
         WebkitTextStroke: '1.5px var(--foreground)',
         color: 'color-mix(in srgb, var(--background) 92%, black 8%)',

@@ -99,7 +99,7 @@ export default function Intro({
                 >
                   <Icon className={`w-10 h-10 md:w-12 md:h-12 ${iconColor}`} aria-hidden="true" />
                 </div>
-                <span className="mt-3 text-sm font-semibold text-foreground/90 text-center">
+                <span className="font-mono mt-3 text-sm font-semibold text-foreground/90 text-center">
                   {label}
                 </span>
               </div>
@@ -116,7 +116,7 @@ export default function Intro({
 
             <li
               ref={typingRef}
-              className="mb-2 tracking-[-.01em] relative after:content-[''] after:inline-block after:w-[1px] after:h-[1em] after:align-[-0.2em] after:ml-1 after:bg-current after:animate-pulse"
+              className="font-sans mb-2 tracking-[-.01em] relative after:content-[''] after:inline-block after:w-[1px] after:h-[1em] after:align-[-0.2em] after:ml-1 after:bg-current after:animate-pulse"
               style={{ whiteSpace: "pre-wrap" }}
             />
 
