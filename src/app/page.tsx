@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { TextPlugin } from "gsap/dist/TextPlugin";
 import Intro from "@/components/Intro";
+import ArticlesList from "@/components/ArticlesList";
 import ContactForm from "@/components/ContactForm";
 // import Demos from "@/components/Demos"; // Temporarily disabled - WIP
 
@@ -145,6 +146,7 @@ export default function Home() {
         typingRef={typingRef}
         loopRef={loopRef}
       />
+      <ArticlesList />
       {/* <Demos /> */}
       <ContactForm />
     </div>

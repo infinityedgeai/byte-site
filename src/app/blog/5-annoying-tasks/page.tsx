@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import ArticleBadge from "@/components/ArticleBadge";
 
 export default function BlogPost() {
   return (
@@ -14,9 +15,15 @@ export default function BlogPost() {
         </Link>
 
         <header className="mb-12">
+          <div className="mb-4">
+            <ArticleBadge type="blog-post" />
+          </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
             The 5 Most Annoying Tasks in Every Business — And What They Reveal About the Future of Work
           </h1>
+          <time className="block text-sm text-foreground/60">
+            January 13, 2026
+          </time>
         </header>
 
         <div className="max-w-none space-y-8 leading-relaxed">

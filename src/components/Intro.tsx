@@ -127,10 +127,10 @@ export default function Intro({
             />
           </ul>
           <Link
-            href="/blog/5-annoying-tasks"
+            href="#articles"
             className="inline-block mt-8 px-6 py-3 bg-primary text-background font-semibold rounded-lg hover:bg-primary/80 transition-colors"
           >
-            Read: The 5 Most Annoying Tasks in Every Business
+            See Our Articles & Case Studies
           </Link>
         </main>
       </div>
