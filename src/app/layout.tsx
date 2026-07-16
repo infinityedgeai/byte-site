@@ -26,6 +26,9 @@ export const metadata: Metadata = {
     type: 'website',
   },
   robots: { index: true, follow: true },
+  verification: {
+    google: 'rtO-We4wLkPk5iMbkpoU7cdOEYqpCZdqNvon-UIjGtg',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
