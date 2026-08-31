@@ -12,12 +12,14 @@ export default function ContactForm() {
   };
 
   return (
-    <section className="h-screen flex flex-col items-center justify-center snap-start px-4 bg-background text-foreground"
-      >
+    <section
+      id="contact"
+      className="h-screen flex flex-col items-center justify-center snap-start px-4 bg-background text-foreground"
+    >
       <h1 className="font-mono text-2xl font-bold mb-6 text-center">
-        Reach out to us with your next <span className="text-secondary">big idea</span>
+        Tell us where the reporting or admin bottleneck is.
       </h1>
-     <Form.Root
+      <Form.Root
         onSubmit={handleSubmit}
         className="w-full max-w-3xl p-6"
       >
@@ -96,9 +98,9 @@ export default function ContactForm() {
           <Form.Submit asChild>
             <button
               type="submit"
-              className="w-full md:w-auto px-8 rounded-lg bg-primary py-2 text-background font-medium hover:bg-primary/80 transition-colors"
+              className="w-full md:w-auto px-8 rounded-lg bg-secondary py-2 text-background font-medium hover:bg-secondary/80 transition-colors"
             >
-              Send Message
+              Send details
             </button>
           </Form.Submit>
         </div>

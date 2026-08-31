@@ -37,44 +37,44 @@ export default function Intro({
 
   const bubbles = [
     {
-      key: "req",
-      label: "Requirement Analysis",
+      key: "reporting",
+      label: "Reporting",
       Icon: FileText,
       border: "border-pink-500/80",
       iconColor: "text-pink-400",
-      aria: "Requirement Analysis",
+      aria: "Reporting",
     },
     {
-      key: "design",
-      label: "Product Design",
+      key: "monitoring",
+      label: "Monitoring",
       Icon: Palette,
       border: "border-rose-400/80",
       iconColor: "text-rose-400",
-      aria: "Product Design",
+      aria: "Monitoring",
     },
     {
-      key: "dev",
-      label: "Product Development",
+      key: "operations",
+      label: "Operations",
       Icon: Monitor,
       border: "border-yellow-400/80",
       iconColor: "text-yellow-400",
-      aria: "Product Development",
+      aria: "Operations",
     },
     {
-      key: "qa",
-      label: "Testing & Integration",
+      key: "admin",
+      label: "Admin",
       Icon: Bug,
       border: "border-lime-400/80",
       iconColor: "text-lime-400",
-      aria: "Testing and Integration",
+      aria: "Admin",
     },
     {
-      key: "deploy",
-      label: "Deployment & Release",
+      key: "insights",
+      label: "Insights",
       Icon: Upload,
       border: "border-cyan-400/80",
       iconColor: "text-cyan-400",
-      aria: "Deployment and Release",
+      aria: "Insights",
     },
   ] as const;
 
@@ -111,7 +111,7 @@ export default function Intro({
             className="font-mono list-inside text-sm/6 text-center sm:text-left max-w-3xl mx-auto sm:mx-0"
           >
             <li className="mb-5 tracking-[0.3em] uppercase">
-              <span className="text-primary font-bold">Software Development</span> Services.
+              <span className="text-primary font-bold">AI automation</span> for renewable operations.
             </li>
 
             <li
@@ -126,12 +126,24 @@ export default function Intro({
               style={{ whiteSpace: "pre-wrap" }}
             />
           </ul>
-          <Link
-            href="#articles"
-            className="inline-block mt-8 px-6 py-3 bg-primary text-background font-semibold rounded-lg hover:bg-primary/80 transition-colors"
-          >
-            See Our Articles & Case Studies
-          </Link>
+
+          <div className="mt-8 max-w-3xl">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-[-0.06em] leading-[0.95] text-foreground">
+              Scale your energy portfolio without scaling headcount.
+            </h1>
+            <p className="mt-5 text-lg text-foreground/80 leading-relaxed max-w-2xl">
+              AI automation for UK renewable asset managers and O&M teams — reporting,
+              monitoring and admin handled in minutes, not days.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <Link
+                href="#contact"
+                className="inline-block px-6 py-3 bg-primary text-background font-semibold rounded-lg hover:bg-primary/80 transition-colors"
+              >
+                Book a 20-minute call
+              </Link>
+            </div>
+          </div>
         </main>
       </div>
     </section>

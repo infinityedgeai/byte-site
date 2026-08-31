@@ -14,11 +14,11 @@ interface Article {
 const articles: Article[] = [
   {
     slug: "/articles/case-study-travel-company",
-    title: "Transforming HR and Marketing Efficiency with AI Automation",
+    title: "How we cut a travel operator's manual workload with AI automation",
     type: "case-study",
     date: "2026-01-25",
     excerpt:
-      "How Byte Engineering helped a Romanian travel company save two workdays per week with AI automation.",
+      "A Romanian travel company was drowning in repetitive back-office work. We built an AI automation that handled it end-to-end.",
   },
   {
     slug: "/blog/5-annoying-tasks",

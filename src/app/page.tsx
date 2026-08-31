@@ -44,7 +44,7 @@ export default function Home() {
         if (typingRef.current) {
           gsap.to(typingRef.current, {
             text:
-              "Our development team guides and enables you in every step of the process towards making your product vision a reality.",
+              "AI automation for UK renewable asset managers and O&M teams — reporting, monitoring and admin handled in minutes, not days.",
             duration: D(5),
             ease: "none",
           });
@@ -52,7 +52,7 @@ export default function Home() {
 
         if (loopRef.current) {
           const el = loopRef.current;
-          const words = ["Software Engineers", "AI Specialists", "Data Experts"];
+          const words = ["Reporting", "Monitoring", "Operations", "Admin"];
           const loopTl = gsap.timeline({ repeat: -1, repeatDelay: D(0.8) });
 
           words.forEach((word) => {
@@ -146,6 +146,50 @@ export default function Home() {
         typingRef={typingRef}
         loopRef={loopRef}
       />
+
+      <section id="services" className="min-h-screen flex items-center justify-center snap-start bg-background text-foreground py-20">
+        <div className="w-full max-w-6xl mx-auto px-6 sm:px-8">
+          <div className="mb-10 text-center max-w-2xl mx-auto">
+            <p className="text-sm uppercase tracking-[0.25em] text-primary font-semibold mb-4">
+              Services
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-[-0.05em]">
+              Automation that cuts admin without adding complexity.
+            </h2>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            <div className="rounded-2xl border-2 border-primary/40 bg-primary/5 p-6 shadow-sm">
+              <p className="text-sm uppercase tracking-[0.2em] text-primary font-semibold mb-3">
+                Primary
+              </p>
+              <h3 className="text-2xl font-bold mb-3">Automation Pilot</h3>
+              <p className="text-foreground/80 leading-relaxed">
+                One workflow, automated end-to-end in 2–4 weeks. Typical targets: monthly
+                performance reporting, SCADA/monitoring data consolidation, invoice
+                reconciliation. Fixed scope, fixed price, measurable hours saved.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-foreground/10 bg-background p-6 shadow-sm">
+              <h3 className="text-2xl font-bold mb-3">Automation Partner</h3>
+              <p className="text-foreground/80 leading-relaxed">
+                Ongoing: we identify, build and maintain automations across your operations.
+                Monthly retainer, cancel anytime.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-foreground/10 bg-background p-6 shadow-sm">
+              <h3 className="text-2xl font-bold mb-3">Custom Build</h3>
+              <p className="text-foreground/80 leading-relaxed">
+                Bespoke internal tools, AI agents and integrations for teams with a specific
+                system in mind.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <ArticlesList />
       {/* <Demos /> */}
       <ContactForm />

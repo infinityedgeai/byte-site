@@ -219,6 +219,19 @@ export default function BlogPost() {
               </p>
             </div>
 
+            <div className="mt-12 rounded-2xl border border-primary/20 bg-primary/5 p-6">
+              <p className="text-sm uppercase tracking-[0.2em] text-primary font-semibold mb-3">
+                Next step
+              </p>
+              <h3 className="text-2xl font-bold mb-4">Book a 20-minute call</h3>
+              <Link
+                href="/#contact"
+                className="inline-block px-5 py-3 bg-primary text-background rounded-lg font-semibold hover:bg-primary/80 transition-colors"
+              >
+                Book a 20-minute call
+              </Link>
+            </div>
+
             <p>
               These &quot;annoyances&quot; are the smoke. Underneath them is the fire: how companies structure knowledge, integrate tools, design processes and enable people to do their best work.
             </p>
